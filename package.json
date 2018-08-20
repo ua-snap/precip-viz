@@ -1,0 +1,47 @@
+{
+  "name": "PostAlfJS",
+  "version": "1.0.0",
+  "description": "Post ALFRESCO JS",
+  "keywords": [
+    "Alec Bennett",
+    "Node.js",
+    "application",
+    "openshift"
+  ],
+  "author": {
+    "name": "Alec Bennett",
+    "email": "alec@alecbennett.com",
+    "url": "http://www.alecbennett.com/"
+  },
+  "homepage": "http://www.alecbennett.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ua-snap/precip.git"
+  },
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "connect": "*",
+    "express": "*",
+    "leaflet": "*",
+    "mapbox": "*",
+    "morgan": "*",
+    "moment": "*",
+    "nib": "*",
+    "nodemailer": "*",
+    "nodemailer-smtp-transport": "*",
+    "plotly": "^1.0.6",
+    "pug": "*",
+    "stylus": "*"
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

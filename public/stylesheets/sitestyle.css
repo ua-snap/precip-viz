@@ -1,0 +1,90 @@
+html {
+	margin: 0px;
+	border: 0px;
+	height: 100%;
+}
+body {
+	font-family: 'Open sans',sans-serif;
+	margin: 0px;
+	font-size: 16px;
+	background-color: #000000;
+}
+a {
+	text-decoration: none;
+}
+a:link { color: #006699; }
+a:visited { color: #006699; }
+a:hover { color: #999999; }
+@font-face {
+	font-family: kimberley;
+	src: url(/fonts/kimberley_bl.otf);
+}
+
+h1 {
+	font-size: 30px;
+}
+h2 {
+	font-size: 24px;
+}
+h3 {
+	font-size: 20px;
+}
+#content div p {
+        font-size: 18px;
+}
+#content header h1 {
+        font-size: 30px;
+}
+
+@media print {
+	#header { 
+		background-color: none;
+	}
+	#menu {
+		visibility: hidden;
+		display: none;
+	}
+	#footer { 
+		display: none;
+	}
+	#content {
+		position: relative;
+		top: 100px;
+	}
+}
+
+
+/* Site Content Stuff */
+.container {
+	width: 100%;
+	background-color: #ffffff;
+	padding-top: 80px;
+	padding-bottom: 50px;
+	min-height: 600px;
+}
+.main-content {
+	width: 980px;
+	margin: auto;
+	font-size: 18px;
+	color: #555555;
+}
+/* Site Footer Stuff */
+select {
+	margin: 5px;
+	padding: 3px;
+	font-size: 18px;
+}
+input {
+	margin: 5px;
+	font-size: 18px;
+}
+.noScriptDemo {
+	left: 50%; 
+	top: 50%; 
+	width: 200px; 
+	text-align: center; 
+	margin-left: -100px; 
+	margin-top: -20px; 
+	position: absolute; 
+	font-weight: bold;
+}
