@@ -1,4 +1,7 @@
-function drawPrecip(){
+function getSum(total, num) {
+    return total + num;
+}
+function drawPrecip(nDays){
 	var hyar = [];
 	var hxar = [];
 	var markers = [];
@@ -25,17 +28,27 @@ function drawPrecip(){
 	dates['10'] = 'October';
 	dates['11'] = 'November';
 	dates['12'] = 'December';
+	var mvAvg = [];
 	$.ajaxSetup({ async: false, dataType: "json" });
         $.getJSON( '/json/precip.json', function( data ) {
                 $.each( data.data, function( key, val ) {
+			if (mvAvg.length > (nDays - 1)){
+				mvAvg = mvAvg.slice(1);
+			}
+			if (val[1] != "T"){
+				mvAvg.push(parseFloat(val[1]));
+			} else {
+				mvAvg.push(0);
+			}
+			var dayAvg = mvAvg.reduce(getSum);
 			if (val[1] >= 0){
 				var index = val[0].substring(0,4);
 				traces[index].hyar.push(val[0].substring(0,4));
 				var newmonth = dates[val[0].substring(5,7)] + ' ' + val[0].substring(8,);
 				traces[index].hxar.push(newmonth);
-				//traces[index].hxar.push(val[0].substring(5,));
-				traces[index].markertext.push(val[1]);
-				traces[index].markers.push(val[1] * val[1] * val[1] * 20);
+				traces[index].markertext.push(dayAvg);
+				var mrkr = Math.pow(dayAvg + 0.5,3) * 10; 
+				traces[index].markers.push(mrkr);
 			}
                 });
          });
@@ -73,5 +86,5 @@ function drawPrecip(){
 	Plotly.newPlot('precipPlot', data, layout);
 }
 $(document).ready( function() {
-	drawPrecip();
+	drawPrecip(1); //N Days to accrue for rolling average. Default 1.
 });
