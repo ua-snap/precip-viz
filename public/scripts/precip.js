@@ -2,20 +2,22 @@ function getSum(total, num) {
     return total + num;
 }
 function drawPrecip(nDays){
-	var hyar = [];
-	var hxar = [];
+	var yar = [];
+	var xar = [];
 	var markers = [];
 	var markertext = [];
 	var traces = {};
+	//Establish 1 trace per year, allowing each year to occupy one line
 	for (var i = 1950; i <= 2018; i++){
 		traces[i] = {}; 
-		traces[i].hxar = [];
-		traces[i].hyar = [];
+		traces[i].xar = [];
+		traces[i].yar = [];
 		traces[i].markertext = [];
 		traces[i].markers = [];
 	}
 	console.log(traces);
 	var dates = [];
+	//Replace this with moment.js
 	dates['01'] = 'January';
 	dates['02'] = 'February';
 	dates['03'] = 'March';
@@ -32,6 +34,8 @@ function drawPrecip(nDays){
 	$.ajaxSetup({ async: false, dataType: "json" });
         $.getJSON( '/json/precip.json', function( data ) {
                 $.each( data.data, function( key, val ) {
+			//This section created a rolling sum of precip values
+			//Allowing for multi-day accrual
 			if (mvAvg.length > (nDays - 1)){
 				mvAvg = mvAvg.slice(1);
 			}
@@ -42,21 +46,27 @@ function drawPrecip(nDays){
 			}
 			var dayAvg = mvAvg.reduce(getSum);
 			if (val[1] >= 0){
+				//Pull the year out of the date string to control object indexing
 				var index = val[0].substring(0,4);
-				traces[index].hyar.push(val[0].substring(0,4));
+				//Set year as Yaxis value to each trace
+				traces[index].yar.push(val[0].substring(0,4));
+				//Set MM/DD as Xaxis value
 				var newmonth = dates[val[0].substring(5,7)] + ' ' + val[0].substring(8,);
-				traces[index].hxar.push(newmonth);
+				traces[index].xar.push(newmonth);
+				//dayAvg is the rolling 1...n amount of precip to display on hover
 				traces[index].markertext.push(dayAvg);
+				//Emphasize abnormally large events with exaggerated marker size
 				var mrkr = Math.pow(dayAvg + 0.5,3) * 10; 
 				traces[index].markers.push(mrkr);
 			}
                 });
          });
 	var data = [];
+	//Add all traces to the data field
 	for (var i = 1950; i <= 2018; i++){
 		var tmptrace = {
-			x: traces[i].hxar,
-			y: traces[i].hyar,
+			x: traces[i].xar,
+			y: traces[i].yar,
 			text: traces[i].markertext,
 			mode: 'markers',
 			marker: {
