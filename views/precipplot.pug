@@ -9,5 +9,10 @@ block content
 
   script.
     var myFiles = "#{files}"
-
-  div#precipPlot(style="width: 1200px; height: 3000px;")
+  label Please Select A Community
+  select#plotSID
+    option(value="ANC 3") Anchorage International Airport
+    option(value="FAI 3") Fairbanks Airport
+    option(value="GCQA2") Gilmore Creek
+    option(value="PATK") Talkeetna Airport
+  div#precipPlot(style="width: 1200px; height: 800px;")

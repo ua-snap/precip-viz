@@ -1,7 +1,7 @@
 function getSum(total, num) {
     return total + num;
 }
-function drawPrecip(nDays){
+function drawPrecip(nDays, SID){
 	var yar = [];
 	var xar = [];
 	var markers = [];
@@ -32,7 +32,7 @@ function drawPrecip(nDays){
 	dates['12'] = 'December';
 	var mvAvg = [];
 	$.ajaxSetup({ async: false, dataType: "json" });
-        $.getJSON( '/json/precip.json', function( data ) {
+        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2018-08-01&elems=4', function( data ) {
                 $.each( data.data, function( key, val ) {
 			//This section created a rolling sum of precip values
 			//Allowing for multi-day accrual
@@ -96,5 +96,7 @@ function drawPrecip(nDays){
 	Plotly.newPlot('precipPlot', data, layout);
 }
 $(document).ready( function() {
-	drawPrecip(1); //N Days to accrue for rolling average. Default 1.
+  $("#plotSID").change( function(){
+    drawPrecip(1, $(this).find('option:selected').val()); //N Days to accrue for rolling average. Default 1.
+  });
 });
