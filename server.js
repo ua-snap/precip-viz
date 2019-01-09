@@ -29,6 +29,16 @@ server.get('/', function (req, res) {
   { title : 'Daily Precipitation Plots' }
   )
 })
+server.get('/belowtemp', function (req, res) {
+  res.render('belowtempplot',
+  { title : 'Daily Temperature Plots' }
+  )
+})
+server.get('/mintemp', function (req, res) {
+  res.render('mintempplot',
+  { title : 'Daily Temperature Plots' }
+  )
+})
 
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080  
 , ip = process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";

@@ -1,4 +1,8 @@
 var SID = 'ANC 3';
+var d3 = Plotly.d3;
+var img_jpg= d3.select('#jpg-export');
+var img_svg= d3.select('#svg-export');
+
 function getSum(total, num) {
     return total + num;
 }
@@ -33,7 +37,7 @@ function drawPrecip(nDays, SID){
 	dates['12'] = 'December';
 	var mvAvg = [];
 	$.ajaxSetup({ async: false, dataType: "json" });
-        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2018-09-20&elems=4', function( data ) {
+        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2019-01-06&elems=4', function( data ) {
                 $.each( data.data, function( key, val ) {
 			//This section created a rolling sum of precip values
 			//Allowing for multi-day accrual
@@ -97,7 +101,18 @@ function drawPrecip(nDays, SID){
 	}
 	};
 
-	Plotly.newPlot('precipPlot', data, layout);
+	Plotly.newPlot('precipPlot', data, layout).then(
+    function(gd)
+     {
+      Plotly.toImage(gd,{height:300,width:300})
+         .then(
+            function(url)
+         {
+             img_svg.attr("src", url);
+	     return Plotly.toImage(gd,{format:'svg',height:800,width:800});
+         }
+         )
+    });
 }
 $(document).ready( function() {
   drawPrecip(1, SID); //N Days to accrue for rolling average. Default 1.
