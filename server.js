@@ -25,6 +25,11 @@ server.use(morgan('combined'))
 server.locals.moment = moment;
 
 server.get('/', function (req, res) {
+  res.render('index',
+  { title : 'Weather Visualizations' }
+  )
+})
+server.get('/precipplot', function (req, res) {
   res.render('precipplot',
   { title : 'Daily Precipitation Plots' }
   )
@@ -40,7 +45,7 @@ server.get('/mintemp', function (req, res) {
   )
 })
 
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080  
-, ip = process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";
-server.listen(port, ip);
-console.log('Server running on http://%s:%s', ip, port);
+var port = process.env.PORT || 8080;
+server.listen(port, function() {
+  console.log("Listening on " + port);
+});
