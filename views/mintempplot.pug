@@ -11,10 +11,6 @@ block content
     var myFiles = "#{files}"
   label Please Select A Community
   select#plotSID
-    option(value="ANC 3") Anchorage International Airport
-    option(value="FAI 3") Fairbanks Airport
-    option(value="GCQA2") Gilmore Creek
-    option(value="JNUthr") Juneau
-    option(value="PATK") Talkeetna Airport
+    include communities.pug
   div#minTempPlot(style="width: 1200px; height: 800px;")
   img#svg-export
