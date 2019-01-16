@@ -36,6 +36,13 @@ server.get('/precipplot', function (req, res) {
   { title : 'Daily Precipitation Plots', stations: stations }
   )
 })
+server.get('/abovetemp', function (req, res) {
+  let stationfile = fs.readFileSync('stations.json');
+  let stations = JSON.parse(stationfile);
+  res.render('abovetempplot',
+  { title : 'Daily Temperature Plots', stations: stations }
+  )
+})
 server.get('/belowtemp', function (req, res) {
   let stationfile = fs.readFileSync('stations.json');
   let stations = JSON.parse(stationfile);
@@ -47,6 +54,13 @@ server.get('/mintemp', function (req, res) {
   let stationfile = fs.readFileSync('stations.json');
   let stations = JSON.parse(stationfile);
   res.render('mintempplot',
+  { title : 'Daily Temperature Plots', stations: stations }
+  )
+})
+server.get('/maxtemp', function (req, res) {
+  let stationfile = fs.readFileSync('stations.json');
+  let stations = JSON.parse(stationfile);
+  res.render('maxtempplot',
   { title : 'Daily Temperature Plots', stations: stations }
   )
 })

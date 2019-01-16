@@ -46,7 +46,7 @@ function drawMinTemp(nDays, SID){
 	hovermode: 'closest'
 	};
 
-	Plotly.newPlot('minTempPlot', data, layout).then(
+	Plotly.newPlot('extremeTempPlot', data, layout).then(
     function(gd)
      {
       Plotly.toImage(gd,{height:300,width:300})

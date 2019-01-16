@@ -3,10 +3,10 @@ var d3 = Plotly.d3;
 var img_jpg= d3.select('#jpg-export');
 var img_svg= d3.select('#svg-export');
 
-function drawBelowTemp(nDays, SID){
+function drawAboveTemp(nDays, SID){
 	var yar = [];
 	var xar = [];
-	var threshold = -20;
+	var threshold = 75;
 	//Establish 1 trace per year, allowing each year to occupy one line
 	for (var i = 1950; i <= 2018; i++){
 		xar[i] = i;
@@ -14,12 +14,12 @@ function drawBelowTemp(nDays, SID){
 	}
 
 	$.ajaxSetup({ async: false, dataType: "json" });
-        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2019-01-06&elems=2', function( data ) {
+        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2019-01-06&elems=1', function( data ) {
 	//	console.log(data);
                 $.each( data.data, function( key, val ) {
 			var year = val[0].substring(0,4);
 			//xar[year] = val[0].substring(0,4);
-			if (parseInt(val[1]) <= threshold){
+			if (parseInt(val[1]) >= threshold){
 				yar[year]++;
 			}
                 });
@@ -29,18 +29,21 @@ function drawBelowTemp(nDays, SID){
 	var tmptrace = {
 		x: xar, 
 		y: yar,
-		type: 'bar'
+		type: 'bar',
+		marker: {
+			color: 'rgb(200,124,124)'
+		}
 	};
 	data.push(tmptrace);
 	var layout = {
-	title: 'Number of Days With Min Temp Below ' + threshold + 'F',
+	title: 'Number of Days With Temp Above ' + threshold + 'F',
 	showlegend: false,
 	height: 600,
 	width: 600,
 	hovermode: 'closest'
 	};
 
-	Plotly.newPlot('belowTempPlot', data, layout).then(
+	Plotly.newPlot('aboveTempPlot', data, layout).then(
     function(gd)
      {
       Plotly.toImage(gd,{height:300,width:300})
@@ -54,9 +57,9 @@ function drawBelowTemp(nDays, SID){
     });
 }
 $(document).ready( function() {
-  drawBelowTemp(1, SID); //N Days to accrue for rolling average. Default 1.
+  drawAboveTemp(1, SID); //N Days to accrue for rolling average. Default 1.
   $("#plotSID").change( function(){
     SID = $(this).find('option:selected').val();
-    drawBelowTemp(1, SID); //N Days to accrue for rolling average. Default 1.
+    drawAboveTemp(1, SID); //N Days to accrue for rolling average. Default 1.
   });
 });
