@@ -1,0 +1,16 @@
+extend layout.pug
+block content
+
+  script(type="text/javascript", src="https://cdn.plot.ly/plotly-latest.min.js")
+  script(type="text/javascript", src="https://code.jquery.com/jquery-3.1.1.min.js")
+  script(type="text/javascript", src="/scripts/extremetemp.js")
+  script(type="text/javasctipt", src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js")
+
+
+  script.
+    var myFiles = "#{files}"
+  label Please Select A Community
+  select#plotSID
+    include communities.pug
+  div#extremeTempPlot(style="width: 1200px; height: 800px;")
+  img#svg-export

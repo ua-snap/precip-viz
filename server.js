@@ -50,6 +50,13 @@ server.get('/belowtemp', function (req, res) {
   { title : 'Daily Temperature Plots', stations: stations }
   )
 })
+server.get('/minmaxtemp', function (req, res) {
+  let stationfile = fs.readFileSync('stations.json');
+  let stations = JSON.parse(stationfile);
+  res.render('minmaxtempplot',
+  { title : 'Daily Temperature Plots', stations: stations }
+  )
+})
 server.get('/mintemp', function (req, res) {
   let stationfile = fs.readFileSync('stations.json');
   let stations = JSON.parse(stationfile);
