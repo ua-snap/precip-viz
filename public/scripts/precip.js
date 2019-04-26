@@ -13,7 +13,7 @@ function drawPrecip(nDays, SID){
 	var markertext = [];
 	var traces = {};
 	//Establish 1 trace per year, allowing each year to occupy one line
-	for (var i = 1950; i <= 2018; i++){
+	for (var i = 1950; i <= 2019; i++){
 		traces[i] = {}; 
 		traces[i].xar = [];
 		traces[i].yar = [];
@@ -37,7 +37,7 @@ function drawPrecip(nDays, SID){
 	dates['12'] = 'December';
 	var mvAvg = [];
 	$.ajaxSetup({ async: false, dataType: "json" });
-        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2019-01-06&elems=4', function( data ) {
+        $.getJSON( 'http://data.rcc-acis.org/StnData?sid=' + SID + '&sdate=1950-01-01&edate=2019-03-15&elems=4', function( data ) {
                 $.each( data.data, function( key, val ) {
 			//This section created a rolling sum of precip values
 			//Allowing for multi-day accrual
@@ -68,7 +68,7 @@ function drawPrecip(nDays, SID){
          });
 	var data = [];
 	//Add all traces to the data field
-	for (var i = 1950; i <= 2018; i++){
+	for (var i = 1950; i <= 2019; i++){
 		var tmptrace = {
 			x: traces[i].xar,
 			y: traces[i].yar,
@@ -91,7 +91,7 @@ function drawPrecip(nDays, SID){
 	hovermode: 'closest',
 	type: 'date',
 	yaxis: {
-	  range: [1950,2018],
+	  range: [1950,2019],
 	  tickformat: 'd'
 	},
 	xaxis: {

@@ -71,6 +71,13 @@ server.get('/maxtemp', function (req, res) {
   { title : 'Daily Temperature Plots', stations: stations }
   )
 })
+server.get('/logs', function (req, res) {
+  let stationfile = fs.readFileSync('stations.json');
+  let stations = JSON.parse(stationfile);
+  res.render('logs',
+  { title : 'Length of Growing Season', stations: stations }
+  )
+})
 
 var port = process.env.PORT || 8080;
 server.listen(port, function() {
